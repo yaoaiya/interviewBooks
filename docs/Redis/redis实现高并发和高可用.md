@@ -188,7 +188,7 @@ zrank board zhaoliu
 
  
 
-答案是：走内存淘汰机制。
+## 答案是：走内存淘汰机制。
 
  
 
@@ -198,11 +198,7 @@ zrank board zhaoliu
 
 如果redis的内存占用过多的时候，此时会进行内存淘汰，有如下一些策略：
 
- 
-
 redis 10个key，现在已经满了，redis需要删除掉5个key
-
- 
 
 1个key，最近1分钟被查询了100次
 
@@ -286,7 +282,7 @@ redis主从架构 -> 读写分离架构 -> 可支持水平扩展的读高并发�
 
 如果这是slave node重新连接master node，那么master node仅仅会复制给slave部分缺少的数据; 否则如果是slave node第一次连接master node，那么会触发一次full resynchronization
 
-开始full resynchronization的时候，master会启动一个后台线程，开始生成一份RDB快照文件，同时还会将从客户端收到的所有写命令缓存在内存中。RDB文件生成完毕之后，master会将这个RDB发送给slave，slave会先写入本地磁盘，然后再从本地磁盘加载到内存中。然后master会将内存中缓存的写命令发送给slave，slave也会同步这些数据。
+开始full resynchronization的时候，master会启动一个后台线程，开始生成一份RDB快照文件，同时还会将从客户端收到的所有写命令缓存在内存中。RDB文件生成完毕之后，**master会将这个RDB发送给slave，slave会先写入本地磁盘，然后再从本地磁盘加载到内存中。**然后master会将内存中缓存的写命令发送给slave，slave也会同步这些数据。
 
 slave node如果跟master node有网络故障，断开了连接，会自动重连。master如果发现有多个slave node都来重新连接，仅仅会启动一个rdb save操作，用一份数据服务所有slave node。
 
